@@ -1,7 +1,7 @@
 # Monitoring [Parte 1]
 Deploy a python app usando prometheus como ferramenta de monitoração
 
-![alt tag](https://github.com/fiapdevops/observability/raw/master/img-src/prometheus_logo.png)
+![alt tag](https://raw.githubusercontent.com/FiapDevOps/observability/f8ccc0419face4b2b99aea68536d21551c699bc7/img-src/prometheus_logo.png)
 
 
 Para testar a aplicação verifique o conteúdo do diretório build em relação aos seguintes pontos:

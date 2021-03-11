@@ -1,0 +1,10 @@
+groups:
+  - name: default
+    rules:
+      - alert: LittleAppDown
+        expr:  up{job="little-app"}
+        for: 1m
+        labels:
+          severity: high
+        annotations:
+          summary: My little app is not responding, please check the little-job

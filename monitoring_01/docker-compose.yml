@@ -4,7 +4,7 @@ services:
 
   sample-app:
     build:
-      context: ./build
+      context: ./app
     environment:
       - PORT="8080"
     ports:

@@ -28,7 +28,7 @@ CMD [ "python", "./app.py" ]
 1.4 Para gerar o artefato que será utilizado no laboratório acesse o diretório do projeto e execute o build do container:
 
 ```sh
-cd $HOME/observability/monitoring_01/build/
+cd $HOME/observability/monitoring_01/app/
 docker build . -t little-app:0.1
 docker run --rm --name little-app -d -e PORT=8080 -p 8080:8080 little-app:0.1
 ```

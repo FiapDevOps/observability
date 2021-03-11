@@ -2,7 +2,7 @@ groups:
   - name: default
     rules:
       - alert: LittleAppDown
-        expr:  up{job="little-app"}
+        expr:  up{job="little-job"} != 1
         for: 1m
         labels:
           severity: high

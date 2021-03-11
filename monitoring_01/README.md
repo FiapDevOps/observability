@@ -30,15 +30,15 @@ CMD [ "python", "./app.py" ]
 ```sh
 cd $HOME/observability/monitoring_01/app/
 docker build . -t little-app:0.1
-docker run --rm --name little-app -d -e PORT=8080 -p 8080:8080 little-app:0.1
+docker run --rm --name little-app -d -e PORT=8080 -p 80:8080 little-app:0.1
 ```
 
 1.3 Após o processo de build você verá um exemplo da aplicação rodando no endereço 127.0.0.1:8080:
 
 | descrição                       | path                              |
 |---------------------------------|-----------------------------------|
-| Entrega da aplicação            | \<IP-APP>:8080                     |
-| Scrape de métricas              | \<IP-APP>:8080/metrics             |
+| Entrega da aplicação            | \<IP-APP>:80                     |
+| Scrape de métricas              | \<IP-APP>:80/metrics             |
 
 ```sh
 curl 127.0.0.1

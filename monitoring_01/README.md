@@ -1,6 +1,9 @@
 # Monitoring [Parte 1]
 Deploy a python app usando prometheus como ferramenta de monitoração
 
+![alt tag](https://github.com/fiapdevops/observability/raw/master/img-src/prometheus_logo.png)
+
+
 Para testar a aplicação verifique o conteúdo do diretório build em relação aos seguintes pontos:
 
 1.1 A versão original da aplicação é um projeto python usando flask preparado para construção em container, um modelo de construção similar pode ser obtido para estudo no portal Real Python: [https://realpython.com/flask-by-example-part-1-project-setup/](https://realpython.com/flask-by-example-part-1-project-setup/);
@@ -45,7 +48,7 @@ curl 127.0.0.1
 curl 127.0.0.1/metrics
 ```
 
-1.4 A aplicação anterior utilziada no teste será iniciada novamente dentro da arquitetura de rede onde está configurado o prometheus e os outros componentes do laboratório, para isso para a aplicação anterior:
+1.4 A aplicação anterior utilizada no teste será iniciada novamente na arquitetura de rede onde está configurado o prometheus e os outros componentes do laboratório, para isso para a aplicação anterior:
 
 ```sh
 docker kill little-app
@@ -63,8 +66,9 @@ Se o processo de build ocorrer conforme esperado e as imagens do prometheus e do
 
 | descrição                            | path                              |
 |--------------------------------------|-----------------------------------|
-| Entrega da aplicação Pytho           | <IP-APP>:8080                     |
+| Entrega da aplicação Python          | <IP-APP>:80                       |
 | Entrega da monitoração time series   | <IP-APP>:9090                     |
+| Entrega da monitoração da instância  | 127.0.0.1:9100                    |
 
 
 1.6. Em nosso modelo temos 3 targets configurados para expor métricas via timeseries, cada um deles é identificado por um job da configuração e podem ser consultados na instância onde rodamos nosso stack na path ":9090/targets";

@@ -71,7 +71,42 @@ Se o processo de build ocorrer conforme esperado e as imagens do prometheus e do
 | Entrega da monitoração da instância  | 127.0.0.1:9100                    |
 
 
-1.6. Em nosso modelo temos 3 targets configurados para expor métricas via timeseries, cada um deles é identificado por um job da configuração e podem ser consultados na instância onde rodamos nosso stack na path ":9090/targets";
+1.6. Em nosso modelo temos 4 targets configurados para expor métricas via timeseries, cada um deles é identificado por um job da configuração e podem ser consultados na instância onde rodamos nosso stack na path ":9090/targets";
+
+---
+
+# Consultando Indicadores
+
+No modelo entregue temos uma aplicação web, respondendo a requisições HTTP e exportando métricas, dados que serão usados para produzir alguns exemplo de SLI:
+
+2.1 Considere uma métrica simples filtrando requisições http com base no status code:
+
+```sh
+flask_http_request_total{status=~"2.."}
+```
+
+2.2 Poderiamos interpretar que requisições com status code diferente de 200 representam o indicador desejado (o que provavelmente não é verdade):
+
+```sh
+sum(rate(flask_http_request_total{status=!"2.."}[5m]))
+```
+
+2.3 Melhorando a estratégia poderiamos filtrar apenas requisições com status code 500, o que provavelmente se aproximaria mais de um cenário onde a falha relativa ao serviço é vinculada a comportamento inesperado em um backend.
+
+```sh
+sum(rate(flask_http_request_total{status=~"5.."}[5m]))
+```
+
+# Gerando um SLO
+
+SLO são sempre baseados em um período de tempo, para o teste anterior a função rate foi utilizada para calcular a quantidade de requisições com retorno 5xx em um intervalo de 5 minutos, utilizando a equação básica para um calculo de disponibilidade poderiamos construir o seguinte cenário:
+
+```sh
+sum(rate(flask_http_request_total{job="app", status!~"5.."}[10m])) /  
+sum(rate(flask_http_request_total{job="app"}[10m])) * 100
+```
+
+> Dentro dos últimos 10 minutos estamos analisando qual a taxa de eventos executados com sucesso (códig ode status diferente de 5xx), ou seja: Eventos válidos dívido pelo total de eventos ocorridos;
 
 ---
 ##### Fiap - MBA DevOps Enginnering | SRE

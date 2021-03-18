@@ -10,5 +10,14 @@ metrics = PrometheusMetrics(app)
 def hello():
     return "SRE and DevOps work together!!! "
 
+@app.route("/fail")
+def fail():
+    1/0
+    return 'fail'
+
+@app.errorhandler(500)
+def handle_500(error):
+    return str(error), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))

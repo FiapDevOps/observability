@@ -125,6 +125,9 @@ flask_http_request_duration_seconds_bucket{job="app", le="0.25"}
 
 Esta métrica baseia-se no acúmulo de buckets, ou seja, contadores que acumulam os pontos recebidos com valor inferior a um determinado tempo, conforme o modelo ilustrado abaixo:
 
+![alt tag](https://github.com/FiapDevOps/observability/raw/32b2b1479a75027dc738f6071411d967be7b6092/img-src/buckets.PNG)
+
+
 Sendo assim cada bucket é sempre um bucket menor que "n" ms, o que significa que na imagem acima os buckets à direita contêm todos os buckets à esquerda.
 
 Você decide quais tamanhos de buckets são significativos dependendo de seus SLIs e escolhendo intervalos que correspondam ao limite superior ao seu indicador, como a métrica baseada em historigram é nativa na maioria das bibliotecas fica mais simples determinar os indicadores nesta abordagem:

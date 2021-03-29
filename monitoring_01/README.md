@@ -11,7 +11,7 @@ Para testar a aplicação verifique o conteúdo do diretório build em relação
 
 1.2. Nesta versão da aplicação foi adicionada uma biblioteca para construção das métricas no prometheus, o [prometheus-flask-exporter](https://pypi.org/project/prometheus-flask-exporter/), acessível a partir do endpoit /metrics;
 
-1.3 Além disso também adicionamos um Dockerfile, pois o modelo descrito nesse Lab utiliza DockerCompose para entregar todos os serviços necessários usando uma camada de abstração de rede e evitando conflitos de endereço IP:
+1.3 Além disso também adicionamos um Dockerfile, pois o modelo descrito nesse exemplo utiliza DockerCompose para entregar todos os serviços necessários usando uma camada de abstração de rede e evitando conflitos de endereço IP:
 
 ```sh
 FROM python:3.8-alpine
@@ -71,13 +71,13 @@ Se o processo de build ocorrer conforme esperado e as imagens do prometheus e do
 | Entrega da monitoração da instância  | 127.0.0.1:9100                    |
 
 
-1.6. Em nosso modelo temos 4 targets configurados para expor métricas via timeseries, cada um deles é identificado por um job da configuração e podem ser consultados na instância onde rodamos nosso stack na path ":9090/targets";
+Em nosso modelo temos 4 targets configurados para expor métricas via timeseries, cada um deles é identificado por um job e podem ser consultados na instância onde rodamos nosso stack na path ":9090/targets";
 
 ---
 
-# Consultando Indicadores
+# Indicando as métricas para os SLIs:
 
-No modelo entregue temos uma aplicação web, respondendo a requisições HTTP e exportando métricas, dados que serão usados para produzir alguns exemplo de SLI:
+No modelo entregue temos uma aplicação web, respondendo a requisições HTTP e exportando métricas, dados que serão usados para produzir alguns exemplos de SLI, acesse a URL da sua stack na porta 9090:
 
 2.1 Considere uma métrica simples filtrando requisições http com base no status code:
 
@@ -85,21 +85,29 @@ No modelo entregue temos uma aplicação web, respondendo a requisições HTTP e
 flask_http_request_total{status=~"2.."}
 ```
 
-2.2 Poderiamos interpretar que requisições com status code diferente de 200 representam o indicador desejado (o que provavelmente não é verdade):
+> O componente prober é responsável por porduzir insumos parta a nossa analise exeuctando requisições http bem sucedidas a cada 1s.
+
+2.2 Poderíamos  interpretar que requisições com status code diferente de 200 representam o indicador desejado (o que provavelmente é falso):
 
 ```sh
 sum(rate(flask_http_request_total{status=!"2.."}[5m]))
 ```
 
-2.3 Melhorando a estratégia poderiamos filtrar apenas requisições com status code 500, o que provavelmente se aproximaria mais de um cenário onde a falha relativa ao serviço é vinculada a comportamento inesperado em um backend.
+Nesta métrica usamos a função [rate()](https://prometheus.io/docs/prometheus/latest/querying/functions/#rate) que considera um intervalo de tempo e um contador como parâmetros para calcular uma "taxa por segundo";
+
+2.3 Melhorando a estratégia poderíamos filtrar apenas requisições com status code 500, o que provavelmente se aproximaria mais de um cenário onde a falha relativa ao serviço é vinculada a comportamento inesperado em um backend.
 
 ```sh
-sum(rate(flask_http_request_total{status=~"5.."}[5m]))
+rate(flask_http_request_total{status=~"5.."}[5m])
 ```
 
-# Gerando um SLO
+> SLO são sempre baseados em um período de tempo, para o teste anterior a função rate foi utilizada para calcular a quantidade de requisições com retorno 5xx em um intervalo de 5 minutos.
 
-SLO são sempre baseados em um período de tempo, para o teste anterior a função rate foi utilizada para calcular a quantidade de requisições com retorno 5xx em um intervalo de 5 minutos, utilizando a equação básica para um calculo de disponibilidade poderiamos construir o seguinte cenário:
+## Prática: Disponibilidade e Latência
+
+Para este cenário nossa implementação de SLI será baseada no sucesso da resposta status code HTTP. As respostas 5xx contaram no SLO, enquanto todas as outras solicitações são consideradas bem-sucedidas.
+
+Neste contexto nosso SLI de disponibilidade seria a proporção de solicitações bem-sucedidas:
 
 ```sh
 sum(rate(flask_http_request_total{job="app", status!~"5.."}[10m])) /  
@@ -107,6 +115,27 @@ sum(rate(flask_http_request_total{job="app"}[10m])) * 100
 ```
 
 > Dentro dos últimos 10 minutos estamos analisando qual a taxa de eventos executados com sucesso (códig ode status diferente de 5xx), ou seja: Eventos válidos dívido pelo total de eventos ocorridos;
+
+
+Já o nosso SLI de latência seria a proporção de solicitações mais rápidas do que os limites definidos (threashould), para obter este perfil de dados utilizaremos uma métrica do tipo [historigram](https://prometheus.io/docs/practices/histograms/) acumulado em buckets, este tipo de métrica separa os pontos enviados por intervalos, cada intervalo conta o número de solicitações que levaram um tempo menor ou igual (le) a um determinado valor, neste caso 250 milisegundos:
+
+```sh
+flask_http_request_duration_seconds_bucket{job="app", le="0.25"}
+```
+
+Esta métrica baseia-se no acúmulo de buckets, ou seja, contadores que acumulam os pontos recebidos com valor inferior a um determinado tempo, conforme o modelo ilustrado abaixo:
+
+Sendo assim cada bucket é sempre um bucket menor que "n" ms, o que significa que na imagem acima os buckets à direita contêm todos os buckets à esquerda.
+
+Você decide quais tamanhos de buckets são significativos dependendo de seus SLIs e escolhendo intervalos que correspondam ao limite superior ao seu indicador, como a métrica baseada em historigram é nativa na maioria das bibliotecas fica mais simples determinar os indicadores nesta abordagem:
+
+```sh
+sum(rate(flask_http_request_duration_seconds_bucket{job="app", le="0.25", status!="500"}[5m])) /
+sum(rate(flask_http_request_duration_seconds_count{job="app",status!="500"}[5m])) * 100
+```
+
+Ao sumarizar as métricas para construir SLIs é normal adicionar um agregador [sum()](https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators) para executar a soma dos resultados obtidos com diferentes labels;
+
 
 ---
 ##### Fiap - MBA DevOps Enginnering | SRE

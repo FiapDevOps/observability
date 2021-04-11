@@ -1,7 +1,7 @@
 # Tracing
 Deploy a python app usando instrumentação baseada em opentelemetry para apresentar o conceito de tracing
 
-![alt tag](https://raw.githubusercontent.com/FiapDevOps/observability/f8ccc0419face4b2b99aea68536d21551c699bc7/img-src/jeager_logo.png)
+![alt tag](https://github.com/FiapDevOps/observability/blob/f51fda6fcb4ad00777dd3012d6505c1c0800c6db/img-src/jeager_logo.png)
 
 
 Neste laboratório executaremos testes básicos de análise do processo de configuração de trace de aplicações usando um modelo python/flask e as bibliotecas do projeto opentelemetry;
@@ -113,7 +113,7 @@ python3 example_exporter.py
 
 2.5 Você verá uma interface similar ao modelo abaixo, para o processo de filtro utilize o nome do serviço estruturado na aplicação como **'example_exporter'**;
 
-![alt tag](https://raw.githubusercontent.com/FiapDevOps/observability/f8ccc0419face4b2b99aea68536d21551c699bc7/img-src/jeager01.png)
+![alt tag](https://github.com/FiapDevOps/observability/blob/f51fda6fcb4ad00777dd3012d6505c1c0800c6db/img-src/jeager_01.png)
 
 
 ## Exemplo 3: Incorporando o tracing a nossa App em Flask

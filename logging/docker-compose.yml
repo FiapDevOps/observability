@@ -1,0 +1,108 @@
+version: '3.8'
+
+# Baseado no modelo apresentado no logz.io (https://logz.io/blog/elk-stack-on-docker/)
+
+services:
+  elasticsearch:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: 7.12.0
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: elasticsearch
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+    networks:
+      - logging
+
+  logstash:
+    build:
+      context: logstash/
+      args:
+        ELK_VERSION: 7.12.0
+    volumes:
+      - type: bind
+        source: ./logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - logging
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: 7.12.0
+    volumes:
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "8080:5601"
+    networks:
+      - logging
+    depends_on:
+      - elasticsearch
+
+  app:
+    build:
+      context: ./app
+    environment:
+      - PORT=8080
+    networks:
+      logging:
+    
+  prober:
+    build:
+      context: ./prober  
+    environment:
+      - PORT=8080
+      - CLOUDPROBER_PORT=8080
+    networks:
+      logging:
+
+  loadbalancer:
+    image: nginx:latest
+    volumes:
+      - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      logging:
+    depends_on:
+      - kibana
+      - app
+
+networks:
+  logging:
+    driver: bridge
+
+volumes:
+  elasticsearch:

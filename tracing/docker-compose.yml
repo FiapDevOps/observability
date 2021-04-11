@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+
+  app:
+    build:
+      context: ./app
+    environment:
+      - PORT=8080
+    ports:
+      - 80:8080
+    networks:
+      tracing:
+
+  prober:
+    build:
+      context: ./prober  
+    environment:
+      - PORT=8080
+      - CLOUDPROBER_PORT=8080
+    networks:
+       tracing:
+
+  jaeger:
+    image: jaegertracing/all-in-one
+    ports:
+      - 8080:16686
+      - 6831:6831/udp
+    networks:
+       tracing:
+
+networks:
+  tracing:
+     name: tracing

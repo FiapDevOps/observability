@@ -126,6 +126,7 @@ De forma similar a aobrdagem utilizada no laboratório de monitoração, neste e
 3.1 Para essa construção basicamente adicionaremos as bibliotecas de instrumentação a relação de requeriments ou com instalação direta via pip:
 
 ```sh
+# Para execução local sem o docker (será necessário permissão administrativa para bind na porta 80 ou uso da porta alta default 5000)
 pip3 install opentelemetry-instrumentation-flask
 ```
 

@@ -105,9 +105,10 @@ with tracer.start_as_current_span("test_span_01"):
             print("SRE and DevOps work together!!!")
 ```
 
-2.4 Execute a aplicação **'example_exporter'**, dessa vez o modelo de envio dos spans substituiu a exibição em STDOUT pelo disparado dos dados para o jeager usando o exporter [opentelemetry.exporter.jaeger](https://opentelemetry-python.readthedocs.io/en/latest/exporter/jaeger/jaeger.html):
+2.4 Execute a instalação do exporter e em seguia a aplicação **'example_exporter'**, dessa vez o modelo de envio dos spans substituiu a exibição em STDOUT pelo disparado dos dados para o jeager usando o exporter [opentelemetry.exporter.jaeger](https://opentelemetry-python.readthedocs.io/en/latest/exporter/jaeger/jaeger.html):
 
 ```sh
+pip3 install opentelemetry.exporter.jaeger
 python3 example_exporter.py
 ```
 

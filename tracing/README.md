@@ -137,8 +137,8 @@ pip3 install opentelemetry-instrumentation-flask
 3.2 A partir do diretório deste do documento em observability/tracing execute:
 
 ```sh
-docker kill jeager
-docker-compose up -d
+docker build app -t sample
+docker run --net host -d --rm --name sample -e PORT=80 sample
 docker ps
 ```
 
@@ -146,8 +146,8 @@ Nesta etapa dosi containers foram criados:
 
 | nome | descrição                       | porta                             |
 |------|---------------------------------|-----------------------------------|
-| tracing_app_1 | Entrega da app com instrumentação usando opentelemetry           | \<IP-APP>:80                      |
-| tracing_jaeger_1 | Stack Jeager com acesso a UI            | \<IP-APP>:8080                    |
+| sample | Entrega da app com instrumentação usando opentelemetry           | \<IP-APP>:80                      |
+| jeager | Stack Jeager com acesso a UI            | \<IP-APP>:8080                    |
 
 Faça um teste acessando a aplicação na porta 80, ao executar o acesso o span será disparado em STDOUT e ao mesmo tempo enviado ao jeager;
 

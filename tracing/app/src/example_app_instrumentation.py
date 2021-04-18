@@ -20,7 +20,7 @@ trace.set_tracer_provider(
 # create a JaegerExporter
 jaeger_exporter = JaegerExporter(
     # configure agent
-    agent_host_name='127.0.0.1',
+    agent_host_name='jaeger',
     agent_port=6831,
     # optional: configure also collector
     # collector_endpoint='http://localhost:14268/api/traces?format=jaeger.thrift',

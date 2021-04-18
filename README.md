@@ -12,6 +12,7 @@ Repositorio de observability para a disciplina SRE do curso [DevOps Enginnering]
 | Laboratório       | Descrição |
 |-------------------|-----------|
 | [monitoring](https://github.com/FiapDevOps/observability/tree/main/monitoring) | Conceito de timeseries e teste prático usando prometheus + python |
+| [tracing](https://github.com/FiapDevOps/observability/tree/main/tracing) | Testes basicos utilizando opentracing com instrumentação em Python |
 
 ---
 ##### Fiap - MBA DevOps Enginnering | SRE

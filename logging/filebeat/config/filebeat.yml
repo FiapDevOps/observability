@@ -1,0 +1,18 @@
+filebeat.inputs:
+- type: container
+  stream: stdout
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+# templates:
+#   - condition:
+#        equals:
+#          docker.container.labels.index.filebeat.logs: "enable"
+
+processors:
+- add_docker_metadata:
+    host: "unix:///var/run/docker.sock"
+
+output.elasticsearch:
+  hosts: 'elasticsearch:9200'
+  username: '${ELASTICSEARCH_USERNAME}'
+  password: '${ELASTICSEARCH_PASSWORD}'

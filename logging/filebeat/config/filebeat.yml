@@ -1,18 +1,27 @@
+# https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-container.html
 filebeat.inputs:
 - type: container
   stream: stdout
   paths:
     - '/var/lib/docker/containers/*/*.log'
-# templates:
-#   - condition:
-#        equals:
-#          docker.container.labels.index.filebeat.logs: "enable"
 
+# https://www.elastic.co/guide/en/beats/filebeat/current/decode-json-fields.html
+- decode_json_fields:
+    fields: ["message"]
+    target: ""
+    overwrite_keys: false
+    add_error_key: true
+
+# https://www.elastic.co/guide/en/beats/filebeat/current/add-docker-metadata.html
 processors:
 - add_docker_metadata:
     host: "unix:///var/run/docker.sock"
 
+# https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html
 output.elasticsearch:
   hosts: 'elasticsearch:9200'
   username: '${ELASTICSEARCH_USERNAME}'
   password: '${ELASTICSEARCH_PASSWORD}'
+
+logging.json: true
+logging.metrics.enabled: false

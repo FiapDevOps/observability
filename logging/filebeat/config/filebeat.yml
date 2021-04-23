@@ -5,6 +5,11 @@ filebeat.inputs:
   paths:
     - '/var/lib/docker/containers/*/*.log'
 
+# https://www.elastic.co/guide/en/beats/filebeat/current/add-docker-metadata.html
+processors:
+- add_docker_metadata:
+    host: "unix:///var/run/docker.sock"
+
 # https://www.elastic.co/guide/en/beats/filebeat/current/decode-json-fields.html
 - decode_json_fields:
     fields: ["message"]
@@ -12,12 +17,6 @@ filebeat.inputs:
     overwrite_keys: false
     add_error_key: true
 
-# https://www.elastic.co/guide/en/beats/filebeat/current/add-docker-metadata.html
-processors:
-- add_docker_metadata:
-    host: "unix:///var/run/docker.sock"
-
-# https://www.elastic.co/guide/en/beats/filebeat/current/elasticsearch-output.html
 output.elasticsearch:
   hosts: 'elasticsearch:9200'
   username: '${ELASTICSEARCH_USERNAME}'

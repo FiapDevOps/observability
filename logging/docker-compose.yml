@@ -119,9 +119,9 @@ services:
       - type: bind
         source: ./nginx/config/nginx-default.conf
         target: /etc/nginx/conf.d/default.conf
-  #  - type: bind
-  #    source: ./nginx/config/nginx.conf
-  #    target: /etc/nginx/nginx.conf        
+      - type: bind
+        source: ./nginx/config/nginx.conf
+        target: /etc/nginx/nginx.conf        
     ports:
       - 80:80
     networks:

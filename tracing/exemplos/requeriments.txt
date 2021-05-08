@@ -1,0 +1,11 @@
+googleapis-common-protos==1.53.0
+grpcio==1.37.1
+opentelemetry-api==1.1.0
+opentelemetry-exporter-jaeger==1.1.0
+opentelemetry-exporter-jaeger-proto-grpc==1.1.0
+opentelemetry-exporter-jaeger-thrift==1.1.0
+opentelemetry-sdk==1.1.0
+opentelemetry-semantic-conventions==0.20b0
+protobuf==3.16.0
+six==1.16.0
+thrift==0.13.0

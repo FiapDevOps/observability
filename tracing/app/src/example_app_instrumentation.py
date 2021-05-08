@@ -35,11 +35,13 @@ span_processor = BatchSpanProcessor(jaeger_exporter)
 # add to the tracer
 trace.get_tracer_provider().add_span_processor(span_processor)
 
+# Utilizando o console para visualizarmos os spans:
 from opentelemetry.sdk.trace.export import (
     ConsoleSpanExporter,
     SimpleSpanProcessor,
 )
 
+# Chamada para visualizar os spans no terminal, do contrário os dados só ficariam a disposição no console do jeager via BatchSpanProcessor configurado nas linahs acima
 trace.set_tracer_provider(TracerProvider())
 trace.get_tracer_provider().add_span_processor(
     SimpleSpanProcessor(ConsoleSpanExporter())

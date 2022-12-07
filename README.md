@@ -1,5 +1,5 @@
 # Observability
-Repositorio de observability para a disciplina SRE do curso [DevOps Enginnering](https://www.fiap.com.br/mba/mba-em-devops-engineering-integration-architecture);
+Repositorio de observability para as disciplinas do curso [DevOps Enginnering](https://www.fiap.com.br/mba/mba-em-devops-engineering-integration-architecture);
 
 > Para execução deste exercício utilize uma instância linux com pelo menos 4GB de memória RAM disponível, o pré-requisito em relação a ferramentas é a instalação do Docker e do Docker Compose conforme detalhado abaixo:
 
@@ -11,11 +11,14 @@ Repositorio de observability para a disciplina SRE do curso [DevOps Enginnering]
 
 | Laboratório       | Descrição |
 |-------------------|-----------|
-| [monitoring](https://github.com/FiapDevOps/observability/tree/main/monitoring) | Conceito de timeseries e teste prático usando prometheus + python |
-| [tracing](https://github.com/FiapDevOps/observability/tree/main/tracing) | Testes basicos utilizando opentracing com instrumentação em Python |
+| [cloud9](https://github.com/fiapdevops/observability/tree/main/cloud9) | Instalação do Cloud9 como plataforma para lançar os demais laboratórios |
+| [monitoring](https://github.com/fiapdevops/observability/tree/main/monitoring) | Conceito de timeseries e teste prático usando prometheus + python |
+| [tracing](https://github.com/fiapdevops/observability/tree/main/tracing) | Testes basicos utilizando opentracing com instrumentação em Python |
+| [logging](https://github.com/fiapdevops/observability/tree/main/logging) | Stack básica para envio de logs usando ELK |
+
 
 ---
-##### Fiap - MBA DevOps Enginnering | SRE
+##### Fiap - MBA
 profhelder.pereira@fiap.com.br
 
 **Free Software, Hell Yeah!**

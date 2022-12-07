@@ -198,9 +198,21 @@ if __name__ == '__main__':
 
 Este exemplo será executado utilizando um container compilando uma versão da app dos labs de monitoração, para isso execute:
 
+3.1. Inicie o terraform:
+
 ```sh
-docker-compose up -d 
+cd observability/monitoring/iac
+terraform init
+terraform plan
 ```
+
+3.2. Verifique a partir do plan que o modelo fara a entrega de uma instancia ubuntu com base no template de [cloud-init](https://cloudinit.readthedocs.io/en/latest/) alocado no diretório "iac/templates" bem como as regras de liberação dos grupos de segurança para comunicacão entre o prometheus e as aplicações
+
+```sh
+terraform apply
+```
+
+---
 
 Nesta etapa dois containers foram criados:
 
@@ -212,7 +224,8 @@ Nesta etapa dois containers foram criados:
 Faça um teste acessando a aplicação na porta 80, ao executar o acesso o span será disparado em STDOUT e ao mesmo tempo enviado ao jeager;
 
 ---
-##### Fiap - MBA DevOps Enginnering | SRE
+
+##### Fiap - MBA
 profhelder.pereira@fiap.com.br
 
 **Free Software, Hell Yeah!**

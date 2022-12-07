@@ -16,18 +16,15 @@ Um exemplo mais complexo com configuração de vpc dentro do processo pode ser c
 
 Nesta etapa faremos algumas configurações na instância de onde partirá as automações dos laboratórios práticos;
 
-2.1. Após finalizar o processo anterior um terminal será exibido dentro do Cloud9, faça uma cópia do [repositório de configuração do ambiente](https://github.com/fiapdevops/observability) da disciplina;
+2.1. Após finalizar o processo anterior um terminal será exibido dentro do Cloud9, faça uma cópia do [repositório de configuração do ambiente](https://github.com/fiapdevops/observability) da disciplina e em seguida execute o script de instalção das ferramentas que serão usadas durante os laboratórios:
+
 
 ```sh
 cd ~/environment
 git clone https://github.com/fiapdevops/observability
-```
 
-2.2. Execute o script de instalção das ferramentas que serão usadas durante os laboratórios:
-
-```sh
+# Execute o script de instalção das ferramentas que serão usadas durante os laboratórios:
 chmod +x ~/environment/observability/cloud9/scripts/*.sh
-
 ~/environment/observability/cloud9/scripts/config.sh
 ```
 

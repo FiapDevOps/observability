@@ -217,8 +217,14 @@ docker-compose restart
 3.5 Com este processo temos uma regra especifica para validar a disponibilidade do job "node"responsável pelo node-exporter, simule uma falha no componente e acompanha o alerta pela interface do prometheus:
 
 ```sh
-docker kill prometheus_node-exporter_1
+docker kill monitoring_node-exporter_1
 ```
+
+**Acessando o Grafana**
+
+Para acessar o grafana utilize a porta :3000 do mesmo endereço de exposição do prometheus;
+
+Faremos o import [do dashboard de exemplo](https://grafana.com/grafana/dashboards/1860-node-exporter-full) que consumirá as métricas do datasource do node-exporter;
 
 ---
 
@@ -267,7 +273,7 @@ Uma documentação detalhada deste setup pode ser consultada neste link [Automat
 
 ---
 
-##### Fiap - MBA DevOps Enginnering | SRE
+##### Fiap - MBA
 profhelder.pereira@fiap.com.br
 
 **Free Software, Hell Yeah!**

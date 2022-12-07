@@ -56,9 +56,6 @@ aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --p
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol icmp --port -1 --source-group $CURRENT_SG
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 80 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 443 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 8080 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 3000 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 9100 --cidr 0.0.0.0/0
 
 done
 

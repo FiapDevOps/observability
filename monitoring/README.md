@@ -9,30 +9,7 @@ Apresentando o conceito de timeseries usando o prometheus;
 
 O prometheus é uma plataforma de monitoração modular baseada em uma linguagem de consulta chamada [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/), em nosso cenário entregaremos uma instancia do prometheus em docker como microserviço para monitorar uma aplicação simples;
 
-1.1. Neste cenário usaremos um bucket remoto para armazenar e posteriormente recuperar o estado da automação, para isso execute:
-
-```sh
-aws s3api create-bucket --bucket terraform-bucket-$C9_PID \
-        --region us-west-2 \
-        --create-bucket-configuration LocationConstraint=us-west-2
-```
-
-1.2. Caso ainda não possua, faça uma cópia do nosso repositório de exemplos:
-
-```sh
-cd ~/environment
-git clone https://github.com/fiapdevops/observability
-cd observability/monitoring/iac
-```
-
-1.3. Consule e utilize o nome do bucket para configurar o backend do terraform na automação:
-
-```sh
-export BUCKET_NAME=$(aws s3api list-buckets --query "Buckets[*].Name" --output json  | jq -r -c '.[]  | select(. | contains("terraform-bucket"))')
-sed -i s/mybucket/$BUCKET_NAME/g main.tf
-```
-
-1.3. Inicie o terraform:
+1.1. Inicie o terraform:
 
 ```sh
 cd observability/monitoring/iac

@@ -196,17 +196,17 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
 ```
 
-Este exemplo será executado utilizando um container compilando uma versão da app dos labs de monitoração, para isso execute:
+Este exemplo será executado utilizando um container compilando uma versão da app com a amostra de tracing:
 
 3.1. Inicie o terraform:
 
 ```sh
-cd observability/monitoring/iac
+cd observability/tracing/iac
 terraform init
 terraform plan
 ```
 
-3.2. Verifique a partir do plan que o modelo fara a entrega de uma instancia ubuntu com base no template de [cloud-init](https://cloudinit.readthedocs.io/en/latest/) alocado no diretório "iac/templates" bem como as regras de liberação dos grupos de segurança para comunicacão entre o prometheus e as aplicações
+3.2. Verifique a partir do plan que o modelo fara a entrega de uma instancia ubuntu com base no template de [cloud-init](https://cloudinit.readthedocs.io/en/latest/) alocado no diretório "iac/templates" bem como as regras de liberação dos grupos de segurança da app
 
 ```sh
 terraform apply

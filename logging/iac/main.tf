@@ -76,7 +76,7 @@ resource "aws_instance" "elk_stack" {
     ami                         = data.aws_ami.ubuntu.id
     instance_type               = "t3.medium"
     associate_public_ip_address = true    
-    user_data                   = "${file("templates/prometheus.yaml")}"
+    user_data                   = "${file("templates/elk.yaml")}"
     vpc_security_group_ids      = [data.aws_security_group.default.id]
     key_name                    = "id_lab"
 

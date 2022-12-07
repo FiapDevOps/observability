@@ -60,7 +60,7 @@ services:
       args:
         ELK_VERSION: 7.12.0
     # Necessário alterar o perfil para obter acesso ao filesystem dos containers na raiz do hospedeiro
-    user: root
+    user: "${UID}"
     environment:
       - strict.perms=false
       - output.elasticsearch.hosts=["elasticsearch:9200"]

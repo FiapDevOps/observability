@@ -3,38 +3,31 @@ version: '3.8'
 services:
 
   app:
-    build:
-      context: ./app
+    image: devfiap/python-flask-app:0.1
     environment:
       - PORT=8080
-    ports:
-      - 80:8080
-    networks:
-       monitoring:
-
-  prober:
-    build:
-      context: ./prober  
-    environment:
-      - PORT=8080
-      - CLOUDPROBER_PORT=8080
     ports:
       - 8080:8080
+    restart: unless-stopped
     networks:
        monitoring:
-
+       
   prometheus:
-    image: prom/prometheus:v2.25.0
+    image: prom/prometheus:v2.35.0
     volumes:
+      - prometheus_data:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./rules.yml:/etc/prometheus/rules.yml
     ports:
-      - 9090:9090
+      - 80:9090
+    restart: unless-stopped
     networks:
        monitoring:
 
   node-exporter:
-    image: prom/node-exporter:v0.18.0
+    image: prom/node-exporter:v1.3.1
+    ports:
+      - 9100:9100
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -47,6 +40,26 @@ services:
     networks:
        monitoring:
 
+  grafana:
+    image: grafana/grafana:8.4.5
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    networks:
+       monitoring:
+
 networks:
   monitoring:
      name: monitoring
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}

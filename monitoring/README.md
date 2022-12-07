@@ -47,8 +47,8 @@ Nesta versão da aplicação foi adicionada uma biblioteca para construção das
 Uma cópia deste padrão pode ser consultada no diretório build da pasta prometheus:
 
 ```sh
-ls $HOME/environment/observability/monitoring/iac/build
-cat $HOME/environment/observability/monitoring/iac/build/src/app.py
+ls $HOME/environment/observability/monitoring/build
+cat $HOME/environment/observability/monitoring/build/src/app.py
 ```
 
 Para gerar a app será utilizado uma imagem criada com base neste build disponível no Dockerhub [https://hub.docker.com/r/devfiap/python-flask-app](https://hub.docker.com/r/devfiap/python-flask-app);

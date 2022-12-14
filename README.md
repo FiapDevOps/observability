@@ -12,7 +12,7 @@ Repositorio de observability para as disciplinas do curso [DevOps Enginnering](h
 | Laboratório       | Descrição |
 |-------------------|-----------|
 | [cloud9](https://github.com/fiapdevops/observability/tree/main/cloud9) | Instalação do Cloud9 como plataforma para lançar os demais laboratórios |
-| [monitoring](https://github.com/fiapdevops/observability/tree/main/monitoring) | Conceito de timeseries e teste prático usando prometheus + python |
+| [monitoring](https://github.com/fiapdevops/observability/tree/main/monitoring) | Conceito de timeseries e teste prático usando prometheus + zabbix |
 | [tracing](https://github.com/fiapdevops/observability/tree/main/tracing) | Testes basicos utilizando opentracing com instrumentação em Python |
 | [logging](https://github.com/fiapdevops/observability/tree/main/logging) | Stack básica para envio de logs usando ELK |
 

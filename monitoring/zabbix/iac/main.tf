@@ -54,15 +54,6 @@ data "aws_ami" "ubuntu" {
 
 # Firewall rules
 
-resource "aws_security_group_rule" "open-port-9090" {
-  type              = "ingress"
-  from_port         = 9090
-  to_port           = 9090
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.default.id
-}
-
 resource "aws_security_group_rule" "open-port-8080" {
   type              = "ingress"
   from_port         = 8080
@@ -72,23 +63,16 @@ resource "aws_security_group_rule" "open-port-8080" {
   security_group_id = data.aws_security_group.default.id
 }
 
-resource "aws_security_group_rule" "open-port-9100" {
+resource "aws_security_group_rule" "open-port-10050-10051" {
   type              = "ingress"
-  from_port         = 9100
-  to_port           = 9100
+  from_port         = 10050
+  to_port           = 10051
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = data.aws_security_group.default.id
 }
 
-resource "aws_security_group_rule" "open-port-3000" {
-  type              = "ingress"
-  from_port         = 3000
-  to_port           = 3000
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.default.id
-}
+
 
 resource "aws_instance" "zabbix" {
     ami                         = data.aws_ami.ubuntu.id

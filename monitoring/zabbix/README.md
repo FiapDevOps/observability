@@ -1,10 +1,13 @@
-# Objetivo
+# Zabbix (Instalação simplificada)
+
+**Objetivo:** Apresentar um cenário com o Zabbix como solução de monitoração centralizada para uma arquitetura simples;
+
 
 ![ZABBIX_00](images/ZABBIX_00.png)
 
-Apresentar um cenário com o Zabbix como solução de monitoração centralizada para uma arquitetura simples;
+---
 
-# Caracteriísticas:
+# Características:
 
 Neste laboratório o zabbix será apresentado no seguinte padrão
 
@@ -21,10 +24,11 @@ terraform init
 terraform apply 
 ```
 
-Acesse o Zabbix a partir da url entregue pelo output do terraform:
+Acesse o Zabbix a partir da url com o dns público da instância que foi entregue pelo output do terraform
 
-usuário: Admin
-senha: zabbix
+usuário: **Admin**
+
+senha: **zabbix**
 
 Um modelo tradicional de instalação pode ser consultado na documentação oficial do Zabbix:
 

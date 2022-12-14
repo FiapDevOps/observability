@@ -19,7 +19,7 @@ Neste laboratório o zabbix será apresentado no seguinte padrão
 Neste laboratório o ambiente já foi estruturado usando a versão 6 do zabbix em uma instalação baseada em docker compose, para criar o nosso ambiente execute a automação a partir do terraform:
 
 ```sh
-cd ~/environment/observability/monitoring/zabbix
+cd ~/environment/observability/monitoring/zabbix/iac
 terraform init
 terraform apply 
 ```
